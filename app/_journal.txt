@@ -1,0 +1,2 @@
+10/2
+- Having issues trying to limit swiping to the settings fragment considering just making it an activity in itself
