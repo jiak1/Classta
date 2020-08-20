@@ -36,7 +36,7 @@ public class ChatFragment extends BaseFragment{
     private UserAdapter userAdapter;
     private List<User> mUsers;
 
-    private List<String> usersList;
+    private List<Chatlist> usersList;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
@@ -58,6 +58,26 @@ public class ChatFragment extends BaseFragment{
 
         usersList = new ArrayList<>();
 
+        reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                usersList.clear();
+                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    usersList.add(chatlist);
+                }
+
+                chatList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /*
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,13 +103,41 @@ public class ChatFragment extends BaseFragment{
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
 
         return rootView;
     }
 
+    private void chatList(){
+        mUsers = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
+                    for(Chatlist chatlist : usersList){
+                        if(user.getId().equals(chatlist.getId())){
+                            mUsers.add(user);
+                        }
+                    }
+                }
+
+                userAdapter = new UserAdapter(getContext(),mUsers,true);
+                recyclerView.setAdapter(userAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /*
     private void readChats(){
         mUsers = new ArrayList<>();
 
@@ -115,11 +163,12 @@ public class ChatFragment extends BaseFragment{
                             }else{
                                 mUsers.add(user);
                             }
+                            mUsers.add(user);
                         }
                     }
                 }
 
-                userAdapter = new UserAdapter(getContext(),mUsers);
+                userAdapter = new UserAdapter(getContext(),mUsers,true);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -128,7 +177,7 @@ public class ChatFragment extends BaseFragment{
 
             }
         });
-    }
+    }*/
 
     @Override
     public int getLayoutResId() {

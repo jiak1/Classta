@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -21,13 +22,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/username"
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/img_on"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="35dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="visible"
+        app:civ_border_color="@color/colorOn"
+        app:civ_border_width="10dp"
+
+        />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/img_off"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="35dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        app:civ_border_color="@color/colorOff"
+        app:civ_border_width="10dp"
+
+        />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="15dp"
-        android:text="John" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="John"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/last_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
+            android:maxLines="1"
+            android:textColor="#9B9B9B" />
+    </LinearLayout>
 
 
 </LinearLayout>

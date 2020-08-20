@@ -13,16 +13,30 @@
         android:src="@mipmap/ic_launcher"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/show_message"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/background_right"
-        android:padding="16px"
-        android:text="hello"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/show_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/background_right"
+            android:padding="16px"
+            android:text="hello"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_seen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16px"
+            android:text="Seen" />
+    </LinearLayout>
+
 </LinearLayout>

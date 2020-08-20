@@ -6,4 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="colorTextHighlight">#00000000</color>
     <color name="icon">#d1d1d1</color>
+    <color name="colorOn">#2ABB1E</color>
+    <color name="colorOff">#BB1E1E</color>
 </resources>

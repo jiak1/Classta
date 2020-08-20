@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog LoadingBar;
 
     private FirebaseAuth mAuth;
+    private TextView forgot_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,14 @@ public class LoginActivity extends AppCompatActivity {
         mEmail = (TextView) findViewById(R.id.signUp_email_txt);
         mPassword = (TextView) findViewById(R.id.login_password_txt);
         mSignInButton = (Button) findViewById(R.id.login_button);
+        forgot_password = findViewById(R.id.forgotPasswordTxt);
+
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
+            }
+        });
 
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override

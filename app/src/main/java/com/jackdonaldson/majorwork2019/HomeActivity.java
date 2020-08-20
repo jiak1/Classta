@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.util.Freezable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,6 +29,7 @@ import com.jackdonaldson.majorwork2019.models.User;
 import com.jackdonaldson.majorwork2019.view.BottomTabView;
 
 import java.io.Console;
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -89,13 +91,12 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
+        mAuth = FirebaseAuth.getInstance();
         //username = findViewById(R.id.username);
         //profile_image = findViewById(R.id.profile_image);
 
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseUser = mAuth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         //User is not logged in
         if(firebaseUser == null){
@@ -103,6 +104,8 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(startIntent);
             finish();
         }
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                 if(user.getImageURL().equals("default")){
                     //profile_image.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    //Glide.with(HomeActivity.this).load(user.getImageURL()).into(profile_image);
+                    //Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
             }
 
@@ -123,5 +126,26 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void status(String status){
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status",status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
     }
 }
