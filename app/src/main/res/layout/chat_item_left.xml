@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,14 +8,19 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/image_profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:elevation="2dp"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_width="0dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="#000000">
 
         <TextView
             android:id="@+id/show_message"
@@ -23,16 +29,23 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/background_left"
-            android:padding="16px"
+            android:elevation="2dp"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="32px"
+            android:shadowColor="#414141"
+            android:shadowRadius="0"
             android:text="hello"
-            android:textColor="#FFFFFF"
+            android:textColor="#505050"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txt_seen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:layout_marginBottom="8dp"
             android:padding="16px"
             android:text="Seen"
             tools:visibility="gone" />

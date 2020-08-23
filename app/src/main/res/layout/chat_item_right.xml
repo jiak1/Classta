@@ -25,16 +25,21 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/background_right"
-            android:padding="16px"
+            android:elevation="3dp"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="32px"
             android:text="hello"
-            android:textColor="#FFFFFF"
+            android:textColor="#F3F3F3"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txt_seen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:layout_marginBottom="8dp"
             android:padding="16px"
             android:text="Seen" />
     </LinearLayout>

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +36,7 @@ import com.jackdonaldson.majorwork2019.adapter.MessageAdapter;
 import com.jackdonaldson.majorwork2019.fragment.APIService;
 import com.jackdonaldson.majorwork2019.models.Chat;
 import com.jackdonaldson.majorwork2019.models.User;
+import com.jackdonaldson.majorwork2019.util.SendMessage;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
@@ -69,14 +71,14 @@ public class MessageActivity extends AppCompatActivity {
     ValueEventListener seenListener;
 
     APIService apiService;
-
+    SendMessage sendMessage;
     boolean notify = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-
+        sendMessage = new SendMessage();
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -103,7 +105,8 @@ public class MessageActivity extends AppCompatActivity {
                 notify = true;
                     String msg = text_send.getText().toString();
                     if(!msg.equals("")){
-                        sendMessage(fuser.getUid(),userid,msg);
+                        sendMessage.sendMessage(fuser.getUid(),userid,msg,notify, MessageActivity.this);
+                        //sendMessage(fuser.getUid(),userid,msg);
                     }else{
                         Toast.makeText(MessageActivity.this,"No message was written!",Toast.LENGTH_SHORT).show();
                     }
@@ -158,8 +161,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void sendMessage(String sender, final String receiver, String message){
+/*
+    public void sendMessage(String sender, final String receiver, String message){
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         //final String userid = intent.getStringExtra("userid");
@@ -247,7 +250,7 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private void readMessages(final String myid,final String userid,final String imageurl){
         mchat = new ArrayList<>();

@@ -103,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent startIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(startIntent);
             finish();
+            return;
         }
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());

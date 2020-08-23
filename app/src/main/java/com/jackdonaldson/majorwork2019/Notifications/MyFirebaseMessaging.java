@@ -3,6 +3,7 @@ package com.jackdonaldson.majorwork2019.Notifications;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,8 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.RemoteInput;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -108,11 +111,34 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         }
 
         Intent snoozeIntent = new Intent(this, ButtonReceiver.class);
-        Log.println(Log.WARN,"JACKDEBUG","HERERERERERE:"+NOTIFICATION_ID);
+        //Log.println(Log.WARN,"JACKDEBUG","HERERERERERE:"+NOTIFICATION_ID);
         snoozeIntent.putExtra("notID", NOTIFICATION_ID);
         snoozeIntent.putExtra("buttonID", 1);
         PendingIntent snoozePendingIntent =
-                PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
+                PendingIntent.getBroadcast(this, 0, snoozeIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // Key for the string that's delivered in the action's intent.
+        final String KEY_TEXT_REPLY = "MSGREPLY";
+
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+                .setLabel("Reply")
+                .build();
+
+        // Build a PendingIntent for the reply action to trigger.
+        PendingIntent replyPendingIntent =
+                PendingIntent.getBroadcast(getApplicationContext(),
+                        0,
+                        new Intent(this, ReplyReceiver.class)
+                        .putExtra("notID", NOTIFICATION_ID)
+                        .putExtra("sender", user),
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Create the reply action and add the remote input.
+        NotificationCompat.Action replyaction =
+                new NotificationCompat.Action.Builder(R.drawable.icon,
+                        "Reply", replyPendingIntent)
+                        .addRemoteInput(remoteInput)
+                        .build();
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(Integer.parseInt(icon))
@@ -122,7 +148,9 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 .setSound(defaultSound)
                 .setContentIntent(pendingIntent)
                 .addAction(R.drawable.icon,"Snooze",
-                        snoozePendingIntent);
+                        snoozePendingIntent)
+                .addAction(replyaction)
+                .setColor(ContextCompat.getColor(this,R.color.colorPrimary));
 
 
         notificationManager.notify(NOTIFICATION_ID,notificationBuilder.build());

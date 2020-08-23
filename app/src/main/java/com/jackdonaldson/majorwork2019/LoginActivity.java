@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         float width = secondTextView.getPaint().measureText(secondTextView.getText().toString());
 
         secondTextView.setTextColor(Color.parseColor("#4f55a3"));
-        LinearGradient textShader = new LinearGradient(0f, 0f, width, 0f, Color.parseColor("#4f55a3"), Color.parseColor("#666efd"), Shader.TileMode.MIRROR);
+        LinearGradient textShader = new LinearGradient(0f, 0f, width, 0f, Color.parseColor("#4e54c8"), Color.parseColor("#8a8ff7"), Shader.TileMode.CLAMP);
         secondTextView.getPaint().setShader(textShader);
 
         findViewById(R.id.logInTxt).setOnClickListener(new View.OnClickListener() {
