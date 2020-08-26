@@ -55,6 +55,9 @@ public class MessageActivity extends AppCompatActivity {
     ImageButton btn_send;
     EditText text_send;
 
+    ImageButton btn_back;
+    ImageButton btn_more_info;
+
     ScrollView message_scroll;
 
     MessageAdapter messageAdapter;
@@ -89,6 +92,8 @@ public class MessageActivity extends AppCompatActivity {
 
         profile_image = findViewById(R.id.image_profile);
         username = findViewById(R.id.username);
+        btn_back = findViewById(R.id.backButton);
+        btn_more_info = findViewById(R.id.morebutton);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
@@ -98,6 +103,14 @@ public class MessageActivity extends AppCompatActivity {
         userid = intent.getStringExtra("userid");
 
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MessageActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,96 +174,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    public void sendMessage(String sender, final String receiver, String message){
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        //final String userid = intent.getStringExtra("userid");
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("sender",sender);
-        hashMap.put("receiver",receiver);
-        hashMap.put("message",message);
-        hashMap.put("isseen",false);
-
-        reference.child("Chats").push().setValue(hashMap);
-
-        //Add user to chat fragment
-        final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
-        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
-                    chatRef.child("id").setValue(userid);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        final String msg = message;
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                Log.println(Log.WARN,"JACKDEBUG","HERE1");
-                if(notify) {
-                    Log.println(Log.WARN,"JACKDEBUG","HERE2");
-                    sendNotification(receiver, user.getUsername(), msg);
-                }
-                notify = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void sendNotification(String receiver, final String username, final String message){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.println(Log.WARN,"JACKDEBUG","HERE3");
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(fuser.getUid(),R.drawable.icon,message,username,userid);
-                    Sender sender = new Sender(data,token.getToken());
-                    Log.println(Log.WARN,"JACKDEBUG","HERE4");
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    Log.println(Log.WARN,"JACKDEBUG","HERE5");
-                                    if(response.code() == 200){
-                                        if(response.body().success != 1){
-                                            Toast.makeText(MessageActivity.this,"Failed!",Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
 
     private void readMessages(final String myid,final String userid,final String imageurl){
         mchat = new ArrayList<>();

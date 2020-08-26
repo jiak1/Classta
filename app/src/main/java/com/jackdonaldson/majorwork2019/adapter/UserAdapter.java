@@ -3,6 +3,7 @@ package com.jackdonaldson.majorwork2019.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.jackdonaldson.majorwork2019.R;
 import com.jackdonaldson.majorwork2019.models.Chat;
 import com.jackdonaldson.majorwork2019.models.User;
 
+import java.security.Timestamp;
+import java.text.DateFormat;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
@@ -33,6 +36,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> mUsers;
     private boolean ischat;
     String theLastMessage;
+
+    Long theLastTime;
 
     public UserAdapter(Context mContext, List<User> mUsers, boolean ischat){
         this.mUsers = mUsers;
@@ -58,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         if(ischat){
-            lastMessage(user.getId(),holder.last_msg);
+            lastMessage(user.getId(),holder.last_msg,holder.last_msg_time);
         }else{
             holder.last_msg.setVisibility(View.GONE);
         }
@@ -98,6 +103,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private ImageView img_on;
         private ImageView img_off;
         private TextView last_msg;
+        private TextView last_msg_time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,14 +111,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             username = itemView.findViewById(R.id.username);
             last_msg = itemView.findViewById(R.id.last_msg);
             profileImage = itemView.findViewById(R.id.image_profile);
+            last_msg_time = itemView.findViewById(R.id.last_time);
             img_on = itemView.findViewById(R.id.img_on);
             img_off = itemView.findViewById(R.id.img_off);
         }
     }
 
     //Check for last message
-    private void lastMessage(final String userid, final TextView last_msg){
+    private void lastMessage(final String userid, final TextView last_msg, final TextView last_msg_time){
         theLastMessage = "default";
+        theLastTime = null;
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
 
@@ -124,7 +132,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     if(chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) ||
                     chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid())){
                         theLastMessage = chat.getMessage();
-
+                        theLastTime = chat.getTime();
                         //set last message bold if reciever didn't sees it.
                         if (!chat.isIsseen() && firebaseUser.getUid().equals(chat.getReceiver())){
                             last_msg.setTypeface(null, Typeface.BOLD);
@@ -137,9 +145,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 switch(theLastMessage){
                     case "default":
                         //last_msg.setText("No Message");
+                        last_msg_time.setText("");
                         break;
                     default:
                         last_msg.setText(theLastMessage);
+                        if(DateUtils.isToday(theLastTime)) {
+                            last_msg_time.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(theLastTime));
+                        }else{
+                            last_msg_time.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(theLastTime));
+                        }
                         break;
                 }
 

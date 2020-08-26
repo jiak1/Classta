@@ -48,6 +48,7 @@ public class SendMessage {
         hashMap.put("sender",sender);
         hashMap.put("receiver",userid);
         hashMap.put("message",message);
+        hashMap.put("time",System.currentTimeMillis());
         hashMap.put("isseen",false);
 
         reference.child("Chats").push().setValue(hashMap);

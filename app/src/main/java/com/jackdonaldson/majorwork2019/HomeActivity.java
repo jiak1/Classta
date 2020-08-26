@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         bottomTabView.setUpWithViewPager(viewPager);
 
         final int color1 = ContextCompat.getColor(this,R.color.colorPrimary);
-        final int color2 = ContextCompat.getColor(this,R.color.colorPrimaryDark);
+        final int color2 = ContextCompat.getColor(this,R.color.white);
         final int color3 = ContextCompat.getColor(this,R.color.colorPrimary);
         final int[] colors = {color1,color2,color3};
 
