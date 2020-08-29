@@ -32,6 +32,8 @@ import com.jackdonaldson.majorwork2019.models.User;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChatFragment extends BaseFragment{
@@ -101,6 +103,13 @@ public class ChatFragment extends BaseFragment{
         reference.child(firebaseUser.getUid()).setValue(token1);
     }
 
+    static class SortByDate implements Comparator<User> {
+        @Override
+        public int compare(User b, User a) {
+            return a.getTime().compareTo(b.getTime());
+        }
+    }
+
     private void chatList(){
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -117,6 +126,7 @@ public class ChatFragment extends BaseFragment{
                     }
                 }
 
+                Collections.sort(mUsers, new SortByDate());
                 userAdapter = new UserAdapter(getContext(),mUsers,true);
                 recyclerView.setAdapter(userAdapter);
             }

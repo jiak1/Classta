@@ -53,6 +53,16 @@ public class SendMessage {
 
         reference.child("Chats").push().setValue(hashMap);
 
+        DatabaseReference usrReference  = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("time",System.currentTimeMillis());
+        usrReference.updateChildren(map);
+
+        usrReference  = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+        map = new HashMap<>();
+        map.put("time",System.currentTimeMillis());
+        usrReference.updateChildren(map);
+
         //Add user to chat fragment
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -7,12 +7,22 @@ public class User {
     private String imageURL;
     private String status;
     private String search;
+    private Long time;
 
-    public User(String id, String username, String imageURL,String status,String search) {
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public User(String id, String username, String imageURL, String status, String search, Long time) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status=status;
+        this.time = time;
         this.search = search;
     }
 
