@@ -7,16 +7,9 @@ import androidx.vectordrawable.graphics.drawable.ArgbEvaluator;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.icu.util.Freezable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +21,6 @@ import com.jackdonaldson.majorwork2019.adapter.MainPagerAdapter;
 import com.jackdonaldson.majorwork2019.models.User;
 import com.jackdonaldson.majorwork2019.view.BottomTabView;
 
-import java.io.Console;
 import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
@@ -129,24 +121,4 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void status(String status){
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status",status);
-
-        reference.updateChildren(hashMap);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        status("online");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        status("offline");
-    }
 }

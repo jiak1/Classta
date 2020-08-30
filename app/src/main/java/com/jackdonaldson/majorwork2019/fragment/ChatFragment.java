@@ -83,11 +83,11 @@ public class ChatFragment extends BaseFragment{
 
             }
         });
-        Log.println(Log.WARN,"JACKDEBUG","YOLO");
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
-                Log.println(Log.WARN,"JACKDEBUG","YOLO2");
+
                 String deviceToken = instanceIdResult.getToken();
                 updateToken(deviceToken);
             }
@@ -97,7 +97,7 @@ public class ChatFragment extends BaseFragment{
     }
 
     private void updateToken(String token){
-        Log.println(Log.WARN,"JACKDEBUG","RUNNININGINIGNG");
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);

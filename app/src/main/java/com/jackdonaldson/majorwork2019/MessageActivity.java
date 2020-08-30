@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
@@ -77,6 +78,7 @@ public class MessageActivity extends AppCompatActivity {
     SendMessage sendMessage;
     boolean notify = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,14 +118,14 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 notify = true;
-                    String msg = text_send.getText().toString();
-                    if(!msg.equals("")){
-                        sendMessage.sendMessage(fuser.getUid(),userid,msg,notify, MessageActivity.this);
-                        //sendMessage(fuser.getUid(),userid,msg);
-                    }else{
-                        Toast.makeText(MessageActivity.this,"No message was written!",Toast.LENGTH_SHORT).show();
-                    }
-                    text_send.setText((""));
+                String msg = text_send.getText().toString();
+                if (!msg.equals("")) {
+                    sendMessage.sendMessage(fuser.getUid(), userid, msg, notify, MessageActivity.this);
+                    //sendMessage(fuser.getUid(),userid,msg);
+                } else {
+                    Toast.makeText(MessageActivity.this, "No message was written!", Toast.LENGTH_SHORT).show();
+                }
+                text_send.setText((""));
             }
         });
 
@@ -133,15 +135,15 @@ public class MessageActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    username.setText(user.getUsername());
-                    if(user.getImageURL().equals("default")){
-                        profile_image.setImageResource(R.mipmap.ic_launcher);
-                    }else{
-                        Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
-                    }
+                User user = dataSnapshot.getValue(User.class);
+                username.setText(user.getUsername());
+                if (user.getImageURL().equals("default")) {
+                    profile_image.setImageResource(R.mipmap.main_icon);
+                } else {
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
+                }
 
-                    readMessages(fuser.getUid(),userid,user.getImageURL());
+                readMessages(fuser.getUid(), userid, user.getImageURL());
             }
 
             @Override
@@ -151,18 +153,19 @@ public class MessageActivity extends AppCompatActivity {
         });
 
         seenMessage(userid);
+        scrollToBottom();
     }
 
-    private void seenMessage(final String userid){
+    private void seenMessage(final String userid) {
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
-                    if(chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)){
-                        HashMap<String,Object> hashMap = new HashMap<>();
-                        hashMap.put("isseen",true);
+                    if (chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen", true);
                         snapshot.getRef().updateChildren(hashMap);
                     }
                 }
@@ -176,7 +179,7 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
-    private void readMessages(final String myid,final String userid,final String imageurl){
+    private void readMessages(final String myid, final String userid, final String imageurl) {
         mchat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -184,16 +187,24 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mchat.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
-                    if(chat.getReceiver().equals(myid) && chat.getSender().equals(userid) || chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
+                    if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) || chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
                         mchat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(MessageActivity.this,mchat,imageurl);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mchat, imageurl);
                     recyclerView.setAdapter(messageAdapter);
                 }
-                scrollToBottom();
+
+                recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        scrollToBottom();
+                        recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+
             }
 
             @Override
@@ -203,37 +214,38 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void scrollToBottom(){
-        message_scroll.smoothScrollTo(0,message_scroll.getHeight());
+    private void scrollToBottom() {
+        message_scroll.smoothScrollTo(0, message_scroll.getHeight());
     }
 
-    private void currentUser(String userid){
-        SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
-        editor.putString("currentuser",userid);
+    private void currentUser(String userid) {
+        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+        editor.putString("currentuser", userid);
         editor.apply();
     }
 
-    private void status(String status){
+    private void status(String status) {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status",status);
+        hashMap.put("status", status);
 
         reference.updateChildren(hashMap);
     }
 
-    @Override
+   @Override
     protected void onResume() {
         super.onResume();
-        status("online");
         currentUser(userid);
     }
 
-    @Override
+   @Override
     protected void onPause() {
         super.onPause();
+
         reference.removeEventListener(seenListener);
-        status("offline");
         currentUser("none");
+
     }
+
 }

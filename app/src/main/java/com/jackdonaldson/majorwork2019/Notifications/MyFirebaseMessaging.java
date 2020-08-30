@@ -135,19 +135,19 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         // Create the reply action and add the remote input.
         NotificationCompat.Action replyaction =
-                new NotificationCompat.Action.Builder(R.drawable.icon,
+                new NotificationCompat.Action.Builder(R.drawable.main_notification,
                         "Reply", replyPendingIntent)
                         .addRemoteInput(remoteInput)
                         .build();
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(Integer.parseInt(icon))
+                .setSmallIcon(R.drawable.main_notification)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
                 .setContentIntent(pendingIntent)
-                .addAction(R.drawable.icon,"Snooze",
+                .addAction(R.drawable.main_notification,"Snooze",
                         snoozePendingIntent)
                 .addAction(replyaction)
                 .setColor(ContextCompat.getColor(this,R.color.colorPrimary));

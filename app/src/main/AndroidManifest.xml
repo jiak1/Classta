@@ -9,12 +9,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/main_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/main_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name=".services.ClasstaApplication"
         tools:ignore="GoogleAppIndexingWarning">
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/main_notification" />
         <activity android:name=".ResetPasswordActivity"
             android:parentActivityName=".LoginActivity"></activity>
         <activity android:name=".MessageActivity" />
