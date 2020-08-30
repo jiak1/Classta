@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="subject_entries">
+        <item>English (Advanced)</item>
+        <item>Mathematics (Advanced)</item>
+    </string-array>
+
+    <string-array name="subject_codes">
+        <item>e2</item>
+        <item>m2</item>
+    </string-array>
+</resources>

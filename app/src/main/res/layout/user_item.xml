@@ -33,12 +33,12 @@
         android:layout_height="15dp"
         android:layout_marginLeft="-15dp"
         android:layout_marginTop="42.5dp"
+        android:layout_marginRight="2dp"
         android:src="@mipmap/main_icon"
         android:visibility="visible"
-        app:civ_border_color="@color/colorOn"
-        app:civ_border_width="10dp"
 
-        />
+        app:civ_border_color="@color/colorOn"
+        app:civ_border_width="10dp" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/img_off"

@@ -47,9 +47,11 @@ public class HomeActivity extends AppCompatActivity {
         BottomTabView bottomTabView = findViewById(R.id.bottom_tab_view);
         bottomTabView.setUpWithViewPager(viewPager);
 
-        final int color1 = ContextCompat.getColor(this,R.color.colorPrimary);
-        final int color2 = ContextCompat.getColor(this,R.color.white);
-        final int color3 = ContextCompat.getColor(this,R.color.colorPrimary);
+        background.setBackgroundColor(ContextCompat.getColor(this,R.color.middleBackground));
+
+        /*final int color1 = ContextCompat.getColor(this,R.color.colorPrimary);
+        final int color2 = ContextCompat.getColor(this,R.color.middleBackground);
+        final int color3 = ContextCompat.getColor(this,R.color.colorPrimaryDark);
         final int[] colors = {color1,color2,color3};
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -75,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
 
     }
@@ -92,11 +94,13 @@ public class HomeActivity extends AppCompatActivity {
 
         //User is not logged in
         if(firebaseUser == null){
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.white));
             Intent startIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(startIntent);
             finish();
             return;
         }
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.darkDarkPrimary));
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 

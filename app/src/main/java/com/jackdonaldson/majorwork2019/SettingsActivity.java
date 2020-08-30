@@ -1,4 +1,4 @@
-package com.jackdonaldson.majorwork2019;
+/*package com.jackdonaldson.majorwork2019;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,3 +52,4 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 }
+*/

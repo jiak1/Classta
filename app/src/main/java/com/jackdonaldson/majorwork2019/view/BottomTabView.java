@@ -92,7 +92,7 @@ public class BottomTabView extends FrameLayout implements ViewPager.OnPageChange
         indicatorTranslationX = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,100,getResources().getDisplayMetrics());
 
         whiteColor = ContextCompat.getColor(getContext(),R.color.icon);
-        buttonColor = ContextCompat.getColor(getContext(),R.color.colorPrimaryDark);
+        buttonColor = ContextCompat.getColor(getContext(),R.color.white);
 
         _indicator.setBackgroundColor(buttonColor);
 
@@ -121,17 +121,17 @@ public class BottomTabView extends FrameLayout implements ViewPager.OnPageChange
         }
 
         if(position == 0){
-            _indicator.setAlpha(1-positionOffset);
+            //_indicator.setAlpha(1-positionOffset);
             _indicator.setScaleX(1-positionOffset);
 
             _indicator.setTranslationX((positionOffset-1)*indicatorTranslationX);
         }else if(position==1){
-            _indicator.setAlpha(positionOffset);
+            //_indicator.setAlpha(positionOffset);
             _indicator.setScaleX(positionOffset);
 
             _indicator.setTranslationX(positionOffset*indicatorTranslationX);
         }
-
+        _indicator.setAlpha(0);
     }
 
     @Override

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:layout_gravity="bottom"
-    android:background="@drawable/bottom_tabs">
+    android:background="@drawable/bottom_tabs"
+    android:elevation="20dp"
+    tools:layout_gravity="bottom">
 
     <ImageView
         android:id="@+id/vbt_center_image"
@@ -19,7 +20,7 @@
         android:id="@+id/vbt_left_image"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_gravity="left|bottom"
+        android:layout_gravity="bottom|left"
         android:layout_marginLeft="64dp"
         android:layout_marginBottom="8dp"
         app:srcCompat="@drawable/search_icon" />

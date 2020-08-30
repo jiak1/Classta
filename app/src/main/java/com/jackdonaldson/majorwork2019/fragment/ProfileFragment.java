@@ -36,8 +36,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.jackdonaldson.majorwork2019.R;
-import com.jackdonaldson.majorwork2019.SettingsActivity;
 import com.jackdonaldson.majorwork2019.models.User;
+import com.jackdonaldson.majorwork2019.settings_activity;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.HashMap;
@@ -97,7 +97,7 @@ public class ProfileFragment extends BaseFragment{
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getActivity(), SettingsActivity.class);
+                Intent startIntent = new Intent(getActivity(), settings_activity.class);
                 startActivity(startIntent);
             }
         });

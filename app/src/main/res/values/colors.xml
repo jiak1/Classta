@@ -7,5 +7,7 @@
     <color name="colorTextHighlight">#00000000</color>
     <color name="icon">#d1d1d1</color>
     <color name="colorOn">#2ABB1E</color>
+    <color name="middleBackground">#E4E4E4</color>
     <color name="colorOff">#BB1E1E</color>
+    <color name="darkDarkPrimary">#474c92</color>
 </resources>
