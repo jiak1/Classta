@@ -14,10 +14,10 @@
             android:layout_marginTop="0dp">
 
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#FFFFFF"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout

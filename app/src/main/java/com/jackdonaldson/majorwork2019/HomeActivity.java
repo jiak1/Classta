@@ -3,10 +3,12 @@ package com.jackdonaldson.majorwork2019;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.vectordrawable.graphics.drawable.ArgbEvaluator;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -100,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             finish();
             return;
         }
+
         getWindow().setNavigationBarColor(getResources().getColor(R.color.darkDarkPrimary));
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -114,6 +117,12 @@ public class HomeActivity extends AppCompatActivity {
                 }else{
                     //Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("name", user.getUsername()).apply();
+                editor.putString("email", firebaseUser.getEmail()).apply();
+                editor.commit();
             }
 
             @Override

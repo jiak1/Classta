@@ -36,6 +36,7 @@
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
     <style name="WhiteEditText">
         <!-- Used for the bottom line when not selected / focused -->
         <item name="colorControlNormal">#FFFFFF</item>
@@ -43,4 +44,13 @@
         <item name="colorControlHighlight">#FFFFFF</item>
         <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

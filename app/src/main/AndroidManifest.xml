@@ -16,11 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".SearchUsers"></activity>
         <activity
             android:name=".settings_activity"
-            android:theme="@style/AppTheme.Settings"
             android:label="@string/title_activity_settings_activity"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jackdonaldson.majorwork2019.HomeActivity" />
@@ -36,7 +37,6 @@
         <activity android:name=".MessageActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-
         <activity
             android:name=".HomeActivity"
             android:theme="@style/FullScreenTheme">

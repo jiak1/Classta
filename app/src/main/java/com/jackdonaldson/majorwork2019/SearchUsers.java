@@ -1,18 +1,17 @@
-package com.jackdonaldson.majorwork2019.fragment;
+package com.jackdonaldson.majorwork2019;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,15 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.jackdonaldson.majorwork2019.R;
-import com.jackdonaldson.majorwork2019.SearchUsers;
 import com.jackdonaldson.majorwork2019.adapter.UserAdapter;
 import com.jackdonaldson.majorwork2019.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends BaseFragment{
+public class SearchUsers extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
@@ -39,34 +36,24 @@ public class SearchFragment extends BaseFragment{
     private List<User> mUsers;
 
     EditText search_users;
-    FloatingActionButton loadSearchActivityButton;
+    Context context;
 
-    public static SearchFragment create(){
-        return new SearchFragment();
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_search,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_users);
 
-        recyclerView = rootView.findViewById(R.id.recycler_view);
+        context = this;
+
+        recyclerView = this.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mUsers = new ArrayList<>();
 
         readUsers();
 
-        search_users = rootView.findViewById(R.id.search_users);
-        loadSearchActivityButton = rootView.findViewById(R.id.loadSearchActivityButton);
-        loadSearchActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startIntent = new Intent(getActivity(), SearchUsers.class);
-                startActivity(startIntent);
-            }
-        });
+        search_users = this.findViewById(R.id.searchUsersInput);
 
         search_users.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,8 +72,8 @@ public class SearchFragment extends BaseFragment{
             }
         });
 
-        return rootView;
     }
+
 
     private void searchUsers(String s){
         final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -95,19 +82,19 @@ public class SearchFragment extends BaseFragment{
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mUsers.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        User user = snapshot.getValue(User.class);
+                mUsers.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
 
-                        assert user != null;
-                        assert fuser != null;
-                        if(!user.getId().equals(fuser.getUid())){
-                            mUsers.add(user);
-                        }
+                    assert user != null;
+                    assert fuser != null;
+                    if(!user.getId().equals(fuser.getUid())){
+                        mUsers.add(user);
                     }
+                }
 
-                    userAdapter = new UserAdapter(getContext(),mUsers,false);
-                    recyclerView.setAdapter(userAdapter);
+                userAdapter = new UserAdapter(SearchUsers.this,mUsers,false);
+                recyclerView.setAdapter(userAdapter);
             }
 
             @Override
@@ -135,7 +122,7 @@ public class SearchFragment extends BaseFragment{
                         }
                     }
 
-                    userAdapter = new UserAdapter(getContext(), mUsers, false);
+                    userAdapter = new UserAdapter(getApplicationContext(), mUsers, false);
                     recyclerView.setAdapter((userAdapter));
                 }
             }
@@ -147,13 +134,4 @@ public class SearchFragment extends BaseFragment{
         });
     }
 
-    @Override
-    public int getLayoutResId() {
-        return R.layout.fragment_search;
-    }
-
-    @Override
-    public void inOnCreateView(View root, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-    }
 }

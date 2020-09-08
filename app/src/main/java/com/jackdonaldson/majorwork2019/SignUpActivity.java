@@ -92,11 +92,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                            HashMap<String,String> hashMap = new HashMap<>();
+                            HashMap<String,Object> hashMap = new HashMap<>();
                             hashMap.put("id",userid);
                             hashMap.put("username",display_name);
                             hashMap.put("imageURL","default");
                             hashMap.put("status","offline");
+                            hashMap.put("time",System.currentTimeMillis());
                             hashMap.put("search",display_name.toLowerCase());
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {

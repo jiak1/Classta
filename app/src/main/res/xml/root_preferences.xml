@@ -20,11 +20,11 @@
 
         <EditTextPreference
             app:key="name"
-            app:title="Full Name"
+            app:title="Display Name"
             app:useSimpleSummaryProvider="true" />
 
         <Preference app:title="Profile Photo"
-            app:key="photo"
+            app:key="profile"
             app:summary="Change Your Current Profile Photo"/>
 
         <MultiSelectListPreference
