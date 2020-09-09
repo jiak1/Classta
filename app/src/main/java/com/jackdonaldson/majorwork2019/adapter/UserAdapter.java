@@ -67,20 +67,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         if(isSearch){
             lastMessage(user.getId(),holder.last_msg,holder.last_msg_time);
         }else{
-            holder.last_msg.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            //holder.last_msg.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             String[] myData = user.getSubjects().split("/");
             String fin = "";
             for (String s: myData) {
                 if(fin.equals("")){
                     fin = s;
                 }else{
-                    fin = fin+"\n"+s;
+                    fin = fin+", "+s;
                 }
             }
             if(fin.equals("")){
                 fin = "No Subjects Selected";
             }
-            holder.last_msg.setMaxLines(10);
+            //holder.last_msg.setMaxLines(10);
             holder.last_msg.setText(fin);
             holder.last_msg_time.setVisibility(View.GONE);
         }
