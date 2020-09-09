@@ -1,6 +1,7 @@
 package com.jackdonaldson.majorwork2019;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -10,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +25,14 @@ import com.jackdonaldson.majorwork2019.adapter.MainPagerAdapter;
 import com.jackdonaldson.majorwork2019.models.User;
 import com.jackdonaldson.majorwork2019.view.BottomTabView;
 
+import java.io.Console;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -88,8 +97,6 @@ public class HomeActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
-        //username = findViewById(R.id.username);
-        //profile_image = findViewById(R.id.profile_image);
 
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseUser = mAuth.getCurrentUser();
@@ -121,7 +128,24 @@ public class HomeActivity extends AppCompatActivity {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("name", user.getUsername()).apply();
+                editor.putString("year", user.getYear()).apply();
                 editor.putString("email", firebaseUser.getEmail()).apply();
+                String[] myData = user.getSubjects().split("/");
+                Set<String> sets = new HashSet<>();
+                for (String s: myData) {
+                    sets.add(s);
+                    //editor.putStringSet("subjects", )
+                }
+                editor.putStringSet("subjects", sets);
+                /*Set <String> set = preferences.getStringSet("subjects", null);
+                if(set != null) {
+                    List<String> list = new ArrayList<String>(set);
+                    for (String s : list) {
+                        Log.println(Log.WARN, "JACKDEBUG", "BOO:" + s);
+                    }
+                }*/
+
+
                 editor.commit();
             }
 

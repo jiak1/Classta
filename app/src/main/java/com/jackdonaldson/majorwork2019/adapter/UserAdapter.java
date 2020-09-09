@@ -3,6 +3,7 @@ package com.jackdonaldson.majorwork2019.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.text.InputType;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.jackdonaldson.majorwork2019.MessageActivity;
 import com.jackdonaldson.majorwork2019.R;
 import com.jackdonaldson.majorwork2019.models.Chat;
 import com.jackdonaldson.majorwork2019.models.User;
+import com.jackdonaldson.majorwork2019.otherProfile;
 
 import java.security.Timestamp;
 import java.text.DateFormat;
@@ -65,11 +67,27 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         if(isSearch){
             lastMessage(user.getId(),holder.last_msg,holder.last_msg_time);
         }else{
-            holder.last_msg.setVisibility(View.GONE);
+            holder.last_msg.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            String[] myData = user.getSubjects().split("/");
+            String fin = "";
+            for (String s: myData) {
+                if(fin.equals("")){
+                    fin = s;
+                }else{
+                    fin = fin+"\n"+s;
+                }
+            }
+            if(fin.equals("")){
+                fin = "No Subjects Selected";
+            }
+            holder.last_msg.setMaxLines(10);
+            holder.last_msg.setText(fin);
             holder.last_msg_time.setVisibility(View.GONE);
         }
 
         if(isSearch){
+            //Chat window
+
             if(user.getStatus().equals("online")){
                 holder.img_on.setVisibility(View.VISIBLE);
                 holder.img_off.setVisibility(View.GONE);
@@ -77,21 +95,32 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 holder.img_on.setVisibility(View.GONE);
                 holder.img_off.setVisibility(View.VISIBLE);
             }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MessageActivity.class);
+                    intent.putExtra("userid",user.getId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+
         }else{
             holder.img_on.setVisibility(View.GONE);
             holder.img_off.setVisibility(View.GONE);
-        }
-        
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MessageActivity.class);
-                intent.putExtra("userid",user.getId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, otherProfile.class);
+                    intent.putExtra("userid",user.getId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+
     }
 
     @Override

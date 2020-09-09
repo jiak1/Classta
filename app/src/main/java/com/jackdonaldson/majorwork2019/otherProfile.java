@@ -1,29 +1,19 @@
-package com.jackdonaldson.majorwork2019.fragment;
+package com.jackdonaldson.majorwork2019;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowInsets;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,19 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
-import com.jackdonaldson.majorwork2019.R;
+import com.jackdonaldson.majorwork2019.fragment.ProfileFragment;
 import com.jackdonaldson.majorwork2019.models.User;
-import com.jackdonaldson.majorwork2019.settings_activity;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import static android.app.Activity.RESULT_OK;
-
-public class ProfileFragment extends BaseFragment{
+public class otherProfile extends AppCompatActivity {
 
     CircularImageView image_profile;
     TextView username;
@@ -55,34 +37,31 @@ public class ProfileFragment extends BaseFragment{
     TextView subjectsText;
     TextView pLoc;
 
+    String userID;
+
     DatabaseReference reference;
-    FirebaseUser firebaseUser;
 
     StorageReference storageReference;
-    private static final int IMAGE_REQUEST = 1;
-    private Uri imageUri;
-    private StorageTask uploadTask;
 
-    public static ProfileFragment create(){
-        return new ProfileFragment();
-    }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_profile,container,false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_other_profile);
 
-        image_profile = rootView.findViewById(R.id.image_profile);
-        username = rootView.findViewById(R.id.username);
-        sCount = rootView.findViewById(R.id.SCount);
-        yCount = rootView.findViewById(R.id.YearCount);
-        subjectsText = rootView.findViewById(R.id.subjectTitleText);
-        pLoc = rootView.findViewById(R.id.profileLocation);
+        image_profile = findViewById(R.id.image_profile);
+        username = findViewById(R.id.username);
+        sCount =findViewById(R.id.SCount);
+        yCount = findViewById(R.id.YearCount);
+        subjectsText = findViewById(R.id.subjectTitleText);
+        pLoc = findViewById(R.id.profileLocation);
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("userid");
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,7 +72,7 @@ public class ProfileFragment extends BaseFragment{
                 if(user.getImageURL().equals("default")){
                     image_profile.setImageResource(R.mipmap.main_icon);
                 }else{
-                    Glide.with(getContext()).load(user.getImageURL()).into(image_profile);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(image_profile);
                 }
                 yCount.setText(user.getYear());
                 pLoc.setText(user.getLocation());
@@ -122,26 +101,17 @@ public class ProfileFragment extends BaseFragment{
             }
         });
 
-        ImageButton settingsButton = rootView.findViewById(R.id.settingsButton);
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getActivity(), settings_activity.class);
-                startActivity(startIntent);
+                Intent intent = new Intent(otherProfile.this, MessageActivity.class);
+                intent.putExtra("userid",userID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
-        return rootView;
     }
 
-
-    @Override
-    public int getLayoutResId() {
-        return R.layout.fragment_profile;
-    }
-
-    @Override
-    public void inOnCreateView(View root, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-    }
 }

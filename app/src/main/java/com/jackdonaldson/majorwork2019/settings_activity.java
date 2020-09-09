@@ -46,8 +46,11 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.jackdonaldson.majorwork2019.models.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 
@@ -193,6 +196,52 @@ public class settings_activity extends AppCompatActivity {
                         // Do nothing.
                     }
                 }).show();
+
+            }else if(email.equals("NULL") == false && key.equals("subjects")){
+
+                Set<String> _s = sharedPreferences.getStringSet("subjects", null);
+                if(_s != null) {
+                    List<String> list = new ArrayList<String>(_s);
+                    String outSubs = "";
+                    for (String s : list) {
+                        if(outSubs.equals("")){
+                            outSubs = s;
+                        }else{
+                            outSubs = outSubs+"/"+s;
+                        }
+                    }
+
+                    Map<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("subjects", outSubs);
+
+                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Updated Subjects", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+            }else if(email.equals("NULL") == false && key.equals("subjects")){
+
+                String _year = sharedPreferences.getString("year", "12");
+
+                    Map<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("year", _year);
+
+                    reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Updated Year Group", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
             }
         }

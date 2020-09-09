@@ -23,6 +23,11 @@
             app:title="Display Name"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:key="year"
+            app:title="School Year"
+            app:useSimpleSummaryProvider="true" />
+
         <Preference app:title="Profile Photo"
             app:key="profile"
             app:summary="Change Your Current Profile Photo"/>
@@ -31,7 +36,7 @@
             app:dialogTitle="Select School Subjects"
             app:entries="@array/subject_entries"
             app:entryValues="@array/subject_codes"
-            app:key="mode_repeat"
+            app:key="subjects"
             app:summary="Change School Subjects"
             app:useSimpleSummaryProvider="true"
             app:title="Subjects" />

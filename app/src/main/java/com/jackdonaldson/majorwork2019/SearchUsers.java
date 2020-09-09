@@ -1,17 +1,21 @@
 package com.jackdonaldson.majorwork2019;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +30,8 @@ import com.jackdonaldson.majorwork2019.adapter.UserAdapter;
 import com.jackdonaldson.majorwork2019.models.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchUsers extends AppCompatActivity {
@@ -34,7 +40,8 @@ public class SearchUsers extends AppCompatActivity {
 
     private UserAdapter userAdapter;
     private List<User> mUsers;
-
+    public boolean[] checkedItems;
+    public String[] itemVals;
     EditText search_users;
     Context context;
 
@@ -42,6 +49,13 @@ public class SearchUsers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_users);
+
+        checkedItems =new boolean[34];
+
+        for (int i = 0; i < 34; i++) {
+            checkedItems[i] = false;
+        }
+        itemVals = getResources().getStringArray(R.array.subject_entries);
 
         context = this;
 
@@ -74,10 +88,43 @@ public class SearchUsers extends AppCompatActivity {
 
     }
 
+    public void backButton(View v){
+        Intent startIntent = new Intent(this, HomeActivity.class);
+        startActivity(startIntent);
+        finish();
+    }
+
+    public void subjectClick(View v){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(SearchUsers.this);
+            alertDialog.setTitle("Subjects");
+            alertDialog.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    searchUsers(search_users.getText().toString());
+                }
+            });
+
+            alertDialog.setMultiChoiceItems(itemVals,checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    checkedItems[which] = isChecked;
+                }
+            });
+            AlertDialog alert = alertDialog.create();
+            alert.setCanceledOnTouchOutside(false);
+            alert.show();
+
+    }
+
 
     private void searchUsers(String s){
         final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search").startAt(s).endAt(s+"\uf8ff");
+        Query query;
+        if(s.isEmpty() == false) {
+             query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search").startAt(s).endAt(s + "\uf8ff");
+        }else{
+             query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search");
+        }
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,11 +132,22 @@ public class SearchUsers extends AppCompatActivity {
                 mUsers.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
-
-                    assert user != null;
-                    assert fuser != null;
-                    if(!user.getId().equals(fuser.getUid())){
-                        mUsers.add(user);
+                    int i = 0;
+                    boolean failed = false;
+                    for (Boolean _b : checkedItems){
+                        if(_b){
+                            if(user.getSubjects().contains(itemVals[i]) == false){
+                                failed = true;
+                            }
+                        }
+                        i++;
+                    }
+                    if(failed == false) {
+                        assert user != null;
+                        assert fuser != null;
+                        if (!user.getId().equals(fuser.getUid())) {
+                            mUsers.add(user);
+                        }
                     }
                 }
 

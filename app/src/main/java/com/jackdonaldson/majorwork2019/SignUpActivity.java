@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -95,6 +99,10 @@ public class SignUpActivity extends AppCompatActivity {
                             HashMap<String,Object> hashMap = new HashMap<>();
                             hashMap.put("id",userid);
                             hashMap.put("username",display_name);
+                            hashMap.put("count","0");
+                            hashMap.put("subjects","");
+                            hashMap.put("year","12");
+                            hashMap.put("location","Oakville");
                             hashMap.put("imageURL","default");
                             hashMap.put("status","offline");
                             hashMap.put("time",System.currentTimeMillis());

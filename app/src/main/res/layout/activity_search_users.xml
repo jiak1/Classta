@@ -22,6 +22,8 @@
             android:layout_marginStart="16dp"
             android:background="@drawable/arrow_left"
             android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:onClick="backButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,8 +75,10 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/search_option_background"
+                    android:clickable="true"
                     android:elevation="50dp"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:onClick="subjectClick"
                     android:padding="10dp"
                     android:text="Subjects"
                     android:textColor="#4E4E4E"
@@ -82,94 +86,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/subjectOption7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/search_option_background"
-                    android:elevation="50dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
-                    android:text="Subjects"
-                    android:textColor="#4E4E4E"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/subjectOption8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_option_background"
-                    android:elevation="50dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
-                    android:text="Subjects"
-                    android:textColor="#4E4E4E"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/subjectOption9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_option_background"
-                    android:elevation="50dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
-                    android:text="Subjects"
-                    android:textColor="#4E4E4E"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/subjectOption10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_option_background"
-                    android:elevation="50dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
-                    android:text="Subjects"
-                    android:textColor="#4E4E4E"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/subjectOption11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_option_background"
-                    android:elevation="50dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
-                    android:text="Subjects"
-                    android:textColor="#4E4E4E"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -204,7 +120,25 @@
                     android:layout_height="match_parent"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:paddingBottom="128dp" />
+                    android:paddingBottom="96dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/infoText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/maven_pro_medium"
+                    android:paddingBottom="16dp"
+                    android:text="No More Results"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#7E7E7E"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </ScrollView>
 

@@ -1,12 +1,76 @@
 <resources>
     <!-- Reply Preference -->
     <string-array name="subject_entries">
+        <item>Aboriginal Studies</item>
+        <item>Agriculture</item>
+        <item>Ancient History</item>
+        <item>Biology</item>
+        <item>Business Studies</item>
+        <item>CAFS</item>
+        <item>Chemistry</item>
+        <item>Dance</item>
+        <item>Design and Technology</item>
+        <item>Drama</item>
+        <item>Earth and Environmental Science</item>
+        <item>Economics</item>
+        <item>Engineering Studies</item>
         <item>English (Advanced)</item>
+        <item>English (Standard)</item>
+        <item>Food Technology</item>
+        <item>Geography</item>
+        <item>Industrial Technology</item>
+        <item>Information Processes and Technology</item>
+        <item>Investigating Science</item>
+        <item>Legal Studies</item>
         <item>Mathematics (Advanced)</item>
+        <item>Mathematics (Standard)</item>
+        <item>Modern History</item>
+        <item>Music 1</item>
+        <item>Music 2</item>
+        <item>PDHPE</item>
+        <item>Physics</item>
+        <item>Society and Culture</item>
+        <item>Software Design and Development</item>
+        <item>Studies of Religion I</item>
+        <item>Studies of Religion II</item>
+        <item>Textiles and Design</item>
+        <item>Visual Arts</item>
     </string-array>
 
     <string-array name="subject_codes">
-        <item>e2</item>
-        <item>m2</item>
+        <item>Aboriginal Studies</item>
+        <item>Agriculture</item>
+        <item>Ancient History</item>
+        <item>Biology</item>
+        <item>Business Studies</item>
+        <item>CAFS</item>
+        <item>Chemistry</item>
+        <item>Dance</item>
+        <item>Design and Technology</item>
+        <item>Drama</item>
+        <item>Earth and Environmental Science</item>
+        <item>Economics</item>
+        <item>Engineering Studies</item>
+        <item>English (Advanced)</item>
+        <item>English (Standard)</item>
+        <item>Food Technology</item>
+        <item>Geography</item>
+        <item>Industrial Technology</item>
+        <item>Information Processes and Technology</item>
+        <item>Investigating Science</item>
+        <item>Legal Studies</item>
+        <item>Mathematics (Advanced)</item>
+        <item>Mathematics (Standard)</item>
+        <item>Modern History</item>
+        <item>Music 1</item>
+        <item>Music 2</item>
+        <item>PDHPE</item>
+        <item>Physics</item>
+        <item>Society and Culture</item>
+        <item>Software Design and Development</item>
+        <item>Studies of Religion I</item>
+        <item>Studies of Religion II</item>
+        <item>Textiles and Design</item>
+        <item>Visual Arts</item>
     </string-array>
 </resources>

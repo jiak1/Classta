@@ -79,6 +79,22 @@ public class SendMessage {
             }
         });
 
+        //Add other user to chat fragment
+        final DatabaseReference chatRef2 = FirebaseDatabase.getInstance().getReference("Chatlist").child(userid).child(fuser.getUid());
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef2.child("id").setValue(fuser.getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         final String msg = message;
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());

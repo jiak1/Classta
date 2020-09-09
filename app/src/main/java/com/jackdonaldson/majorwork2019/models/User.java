@@ -7,6 +7,10 @@ public class User {
     private String imageURL;
     private String status;
     private String search;
+    private String subjects;
+    private String count;
+    private String year;
+    private String location;
     private Long time;
 
     public Long getTime() {
@@ -17,17 +21,53 @@ public class User {
         this.time = time;
     }
 
-    public User(String id, String username, String imageURL, String status, String search, Long time) {
+    public String getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(String subjects) {
+        this.subjects = subjects;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public User(String id, String username, String imageURL, String status, String search, Long time, String subjects, String count, String year, String location) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status=status;
         this.time = time;
         this.search = search;
+        this.subjects = subjects;
+        this.year = year;
+        this.count = count;
+        this.location = location;
     }
 
     public User(){
 
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getId() {
