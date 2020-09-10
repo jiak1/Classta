@@ -98,6 +98,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:lineSpacingMultiplier="1.2"
             android:textColor="#9B9B9B" />
 

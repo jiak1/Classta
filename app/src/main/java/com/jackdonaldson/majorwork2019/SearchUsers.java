@@ -104,6 +104,18 @@ public class SearchUsers extends AppCompatActivity {
                 }
             });
 
+            alertDialog.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < 34; i++) {
+                        checkedItems[i] = false;
+                    }
+                    searchUsers(search_users.getText().toString());
+
+                }
+            });
+
+
             alertDialog.setMultiChoiceItems(itemVals,checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -133,16 +145,16 @@ public class SearchUsers extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
                     int i = 0;
-                    boolean failed = false;
+                    int sCount = 0;
                     for (Boolean _b : checkedItems){
                         if(_b){
-                            if(user.getSubjects().contains(itemVals[i]) == false){
-                                failed = true;
+                            if(user.getSubjects().contains(itemVals[i])){
+                                sCount ++;
                             }
                         }
                         i++;
                     }
-                    if(failed == false) {
+                    if(sCount >= 1) {
                         assert user != null;
                         assert fuser != null;
                         if (!user.getId().equals(fuser.getUid())) {

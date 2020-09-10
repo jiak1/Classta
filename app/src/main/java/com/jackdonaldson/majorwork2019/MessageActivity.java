@@ -156,6 +156,13 @@ public class MessageActivity extends AppCompatActivity {
         scrollToBottom();
     }
 
+    public void showOtherProfile(View v){
+        Intent intent = new Intent(MessageActivity.this, otherProfile.class);
+        intent.putExtra("userid",userid);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private void seenMessage(final String userid) {
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
