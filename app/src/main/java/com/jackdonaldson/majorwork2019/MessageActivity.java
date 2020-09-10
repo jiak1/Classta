@@ -232,12 +232,15 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void status(String status) {
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(fUser != null) {
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("status", status);
 
-        reference.updateChildren(hashMap);
+            reference.updateChildren(hashMap);
+        }
     }
 
    @Override
